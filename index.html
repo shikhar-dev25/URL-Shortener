@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>URL Shortener</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">URL Shortener</h1>
+    <form id="shorten-form" class="space-y-4">
+      <input
+        id="url-input"
+        type="url"
+        placeholder="Enter URL"
+        required
+        class="w-full p-3 border border-gray-300 rounded hover:border-[#ea333d] focus:outline-none focus:ring-2 focus:ring-[#ea333d]"
+      />
+      <input
+        id="custom-code-input"
+        type="text"
+        placeholder="Custom short code (optional)"
+        pattern="^[a-zA-Z0-9_-]{3,15}$"
+        title="3-15 characters: letters, numbers, _ or -"
+        class="w-full p-3 border border-gray-300 rounded hover:border-[#ea333d] focus:outline-none focus:ring-2 focus:ring-[#ea333d]"
+      />
+      <button
+        type="submit"
+        class="w-full bg-[#ea333d] text-white py-3 rounded hover:bg-[#ea333d] transition"
+      >
+        Shorten URL
+      </button>
+    </form>
+
+    <div id="result" class="mt-6 text-center text-[#ea333d]-700 break-all"></div>
+    <div id="error" class="mt-4 text-center text-red-600"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('shorten-form');
+    const urlInput = document.getElementById('url-input');
+    const customCodeInput = document.getElementById('custom-code-input');
+    const resultDiv = document.getElementById('result');
+    const errorDiv = document.getElementById('error');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      resultDiv.textContent = "";
+      errorDiv.textContent = "";
+
+      const url = urlInput.value.trim();
+      const customCode = customCodeInput.value.trim();
+
+      if (!url) {
+        errorDiv.textContent = 'Please enter a valid URL.';
+        return;
+      }
+
+      const payload = { url };
+      if (customCode) {
+        payload.customCode = customCode;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/shortener', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          errorDiv.textContent = data.error || 'Something went wrong.';
+          return;
+        }
+
+        resultDiv.innerHTML = `Short URL: <a href="${data.shortUrl}" target="_blank" class="underline">${data.shortUrl}</a>`;
+      } catch (err) {
+        errorDiv.textContent = 'Failed to connect to server.';
+      }
+    });
+  </script>
+</body>
+</html>

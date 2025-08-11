@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shikhar-dev25/URL-Shortener#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0"
   }
 }

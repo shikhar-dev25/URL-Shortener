@@ -1,13 +1,15 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 const urlDatabase = {};
 
 function generateCode() {
   const chars = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-  let code = " ";
+  let code = "";
   for (let i = 0; i < 6; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
@@ -15,7 +17,7 @@ function generateCode() {
 }
 
 app.post('/shortener', (req, res) => {
-  const { url } = req.body;
+  const {url} = req.body;
   try {
     new URL(url);
   } catch {
@@ -44,5 +46,5 @@ app.get('/:code', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+  console.log(`Listening on port:  ${port}`);
 });
