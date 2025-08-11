@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/shikhar-dev25/URL-Shortener/issues"
   },
-  "homepage": "https://github.com/shikhar-dev25/URL-Shortener#readme"
+  "homepage": "https://github.com/shikhar-dev25/URL-Shortener#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

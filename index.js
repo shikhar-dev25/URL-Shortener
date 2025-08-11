@@ -6,15 +6,15 @@ app.use(express.json());
 const urlDatabase = {};
 
 function generateCode() {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
+  const chars = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+  let code = " ";
   for (let i = 0; i < 6; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return code;
 }
 
-app.post('/shorten', (req, res) => {
+app.post('/shortener', (req, res) => {
   const { url } = req.body;
   try {
     new URL(url);
