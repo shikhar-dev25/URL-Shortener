@@ -32,7 +32,9 @@ app.post('/shortener', (req, res) => {
   urlDatabase[shortCode] = url;
   const shortUrl = `${req.protocol}://${req.get('host')}/${shortCode}`;
 
-  res.json({ shortCode, shortUrl });
+  res.json({ 
+    shortCode,
+    shortUrl });
 });
 
 app.get('/:code', (req, res) => {
@@ -44,7 +46,7 @@ app.get('/:code', (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Listening on port:  ${port}`);
 });
