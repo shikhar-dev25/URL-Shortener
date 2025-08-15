@@ -17,14 +17,14 @@
         required
         class="w-full p-3 border border-gray-300 rounded hover:border-[#ea333d] focus:outline-none focus:ring-2 focus:ring-[#ea333d]"
       />
-      <input
+      <!-- <input
         id="custom-code-input"
         type="text"
         placeholder="Custom short code (optional)"
-        pattern="^[a-zA-Z0-9_-]{3,15}$"
-        title="3-15 characters: letters, numbers, _ or -"
+        pattern="^[a-zA-Z0-9]{5}$"
+        title="3-15 characters: letters and numbers only"
         class="w-full p-3 border border-gray-300 rounded hover:border-[#ea333d] focus:outline-none focus:ring-2 focus:ring-[#ea333d]"
-      />
+      /> -->
       <button
         type="submit"
         class="w-full bg-[#ea333d] text-white py-3 rounded hover:bg-[#ea333d] transition"
@@ -40,7 +40,6 @@
   <script>
     const form = document.getElementById('shorten-form');
     const urlInput = document.getElementById('url-input');
-    const customCodeInput = document.getElementById('custom-code-input');
     const resultDiv = document.getElementById('result');
     const errorDiv = document.getElementById('error');
 
@@ -50,7 +49,6 @@
       errorDiv.textContent = "";
 
       const url = urlInput.value.trim();
-      const customCode = customCodeInput.value.trim();
 
       if (!url) {
         errorDiv.textContent = 'Please enter a valid URL.';
@@ -58,9 +56,6 @@
       }
 
       const payload = { url };
-      if (customCode) {
-        payload.customCode = customCode;
-      }
 
       try {
         const response = await fetch('http://localhost:3000/shortener', {
