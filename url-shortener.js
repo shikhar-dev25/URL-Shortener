@@ -8,9 +8,9 @@ app.use(cors());
 const urlDatabase = {};
 
 function generateCode() {
-  const chars = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
   let code = "";
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 5; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return code;
